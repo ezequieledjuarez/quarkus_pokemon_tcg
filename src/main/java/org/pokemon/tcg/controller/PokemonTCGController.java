@@ -1,8 +1,12 @@
 package org.pokemon.tcg.controller;
 
+import java.util.List;
+
 import org.eclipse.microprofile.rest.client.inject.RestClient;
+import org.pokemon.tcg.adapter.PokemonAdapter;
 import org.pokemon.tcg.model.TCGReponseData;
 import org.pokemon.tcg.model.TCGReponseDataList;
+import org.pokemon.tcg.model.TCGResponseApi;
 import org.pokemon.tcg.service.impl.PokemonTCGService;
 
 import jakarta.inject.Inject;
@@ -22,9 +26,9 @@ public class PokemonTCGController {
 	@GET
 	@Path("/obtener_todos")
 	@Produces(MediaType.APPLICATION_JSON)
-	public TCGReponseDataList getPokemonById() {
-
-		return pokemonTCGService.getAllPokemon();
+	public List<TCGResponseApi> getPokemonById() {
+		TCGReponseDataList pokemonService =  pokemonTCGService.getAllPokemon();
+		return PokemonAdapter.responseGetAllApi(pokemonService).getData();
 	}
 	
 	@GET
