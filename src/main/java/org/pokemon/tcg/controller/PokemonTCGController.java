@@ -26,9 +26,17 @@ public class PokemonTCGController {
 	@GET
 	@Path("/obtener_todos")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<TCGResponseApi> getPokemonById() {
+	public List<TCGResponseApi> getAllPokemon() {
 		TCGReponseDataList pokemonService =  pokemonTCGService.getAllPokemon();
 		return PokemonAdapter.responseGetAllApi(pokemonService).getData();
+	}
+	
+	@GET
+	@Path("/obtener_aleatorios")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<TCGResponseApi> getPokemonRandom() {
+		TCGReponseDataList pokemonService =  pokemonTCGService.getAllPokemon();
+		return PokemonAdapter.responseGetRandomApi(pokemonService).getData();
 	}
 	
 	@GET
@@ -42,10 +50,11 @@ public class PokemonTCGController {
 	@GET
 	@Path("/obtener_pokemon")
 	@Produces(MediaType.APPLICATION_JSON)
-	public TCGReponseDataList getPokemonByName(@QueryParam("name") String name ) {
+	public List<TCGResponseApi> getPokemonByName(@QueryParam("name") String name ) {
 		
 		StringBuilder queryValueName = new StringBuilder().append("name:").append(name); 
+		TCGReponseDataList pokemonService = pokemonTCGService.getPokemonByQuery(queryValueName.toString());
+		return PokemonAdapter.responseGetAllApi(pokemonService).getData();
 		
-		return pokemonTCGService.getPokemonByQuery(queryValueName.toString());
 	}
 }
