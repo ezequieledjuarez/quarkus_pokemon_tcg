@@ -8,6 +8,7 @@ import org.pokemon.tcg.model.TCG;
 import org.pokemon.tcg.model.TCGReponseDataList;
 import org.pokemon.tcg.model.TCGResponseApi;
 import org.pokemon.tcg.model.TCGResponseApiData;
+import org.pokemon.tcg.model.TypesData;
 
 public class PokemonAdapter {
 
@@ -66,5 +67,14 @@ public class PokemonAdapter {
 
 		}
 		return esCartaRepetida;
+	}
+	
+	public static TCGResponseApiData responsePokemonTypes(TypesData types) {
+		
+		TCGResponseApiData tcgResponseApiData = new TCGResponseApiData();
+		
+		tcgResponseApiData.setTypes(types.getTypes());
+		
+		return tcgResponseApiData;
 	}
 }

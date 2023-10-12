@@ -14,7 +14,7 @@ public class TCGReponseDataList implements Serializable{
 	 */
 	private static final long serialVersionUID = -8065363266781785402L;
 	private List<TCG> data;
-
+	
 	public TCGReponseDataList(List<TCG> data) {
 		super();
 		this.data = data;
@@ -31,6 +31,7 @@ public class TCGReponseDataList implements Serializable{
 	public void setData(List<TCG> data) {
 		this.data = data;
 	}
+	
 	
 	
 }
