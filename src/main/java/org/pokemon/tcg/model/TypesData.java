@@ -12,6 +12,8 @@ public class TypesData {
 	@JsonProperty("data")
 	private List<String> types;
 
+	
+	
 	public TypesData() {
 		super();
 	}
@@ -28,4 +30,11 @@ public class TypesData {
 	public void setTypes(List<String> types) {
 		this.types = types;
 	}
+
+	@Override
+	public String toString() {
+		return "TypesData [types=" + types + "]";
+	}
+	
+	
 }

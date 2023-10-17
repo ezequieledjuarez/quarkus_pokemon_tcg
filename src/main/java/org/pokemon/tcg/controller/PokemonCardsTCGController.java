@@ -50,11 +50,13 @@ public class PokemonCardsTCGController {
 	@GET
 	@Path("/obtener_pokemon")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<TCGResponseApi> getPokemonByName(@QueryParam("name") String name) {
-
-		StringBuilder queryValueName = new StringBuilder().append("name:").append(name);
+	public List<TCGResponseApi> getPokemonByName(@QueryParam("query") String name) {
+		
+		String[] datosQuery = name.split(":");
+		StringBuilder queryValueName = new StringBuilder().append( datosQuery[0].concat(":")).append(datosQuery[1]);
 		TCGReponseDataList pokemonService = pokemonTCGService.getPokemonByQuery(queryValueName.toString());
 		return PokemonAdapter.responseGetAllApi(pokemonService).getData();
 
 	}
+
 }

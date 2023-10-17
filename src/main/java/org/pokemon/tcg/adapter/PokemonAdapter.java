@@ -4,14 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import org.pokemon.tcg.model.SetsApi;
 import org.pokemon.tcg.model.TCG;
 import org.pokemon.tcg.model.TCGReponseDataList;
 import org.pokemon.tcg.model.TCGResponseApi;
 import org.pokemon.tcg.model.TCGResponseApiData;
+import org.pokemon.tcg.model.Type;
 import org.pokemon.tcg.model.TypesData;
 
 public class PokemonAdapter {
-
+	
 	public static TCGResponseApiData responseGetAllApi(TCGReponseDataList responseService) {
 		List<TCG> pokemonList = responseService.getData();
 		List<TCGResponseApi> listApiPokemon = new ArrayList<>();
@@ -36,9 +38,7 @@ public class PokemonAdapter {
 			int randomPokemon = random.nextInt(200);
 			
 			TCG tcg = pokemonServiceList.get(randomPokemon);
-			
-			System.out.println("Se intentará agregar el pokemon: " + tcg.getName() + tcg.getId());
-			
+						
 			if (null != tcg.getFlavorText() && !esCartaRepetida(tcg, listApiPokemon)) {
 				TCGResponseApi responseApiPokemon = new TCGResponseApi(pokemonServiceList.get(randomPokemon).getName(),
 						pokemonServiceList.get(randomPokemon).getImages().getLarge(),
@@ -59,7 +59,6 @@ public class PokemonAdapter {
 
 		while (i < listApiPokemon.size() && !esCartaRepetida && !listApiPokemon.isEmpty()) {
 			if (listApiPokemon.get(i).getPokemonImage().equals(cartaParaAgregar.getImages().getLarge())) {
-				System.out.println("El pokemon ya está agregado");
 				esCartaRepetida = true;
 			} else {
 				i++;
@@ -73,8 +72,34 @@ public class PokemonAdapter {
 		
 		TCGResponseApiData tcgResponseApiData = new TCGResponseApiData();
 		
-		tcgResponseApiData.setTypes(types.getTypes());
+		List<String> typesService = types.getTypes();
+		List<Type> typesApi = tcgResponseApiData.getTypes();
 		
+		for (String type : typesService) {
+			String path = "/assets/images/card_types/".concat(type.toLowerCase().concat(".png"));
+			
+			System.out.println(path);
+			Type typeApi = new Type(type, path);
+			typesApi.add(typeApi);
+		}
+		
+		tcgResponseApiData.setTypes(typesApi);
 		return tcgResponseApiData;
 	}
+
+	public static TCGResponseApiData adaptSets(TCGReponseDataList setsServices) {
+		List<TCG> setsServicesData = setsServices.getData();
+		TCGResponseApiData apiData = new TCGResponseApiData();
+		List<SetsApi> setsApiData = new ArrayList<>();
+		
+		for (TCG tcg : setsServicesData) {
+			SetsApi setsApi = new SetsApi(tcg.getName(),tcg.getImages().getSymbol(),tcg.getImages().getLogo(), tcg.getId()); 
+			
+			setsApiData.add(setsApi);
+		}
+		
+		apiData.setSets(setsApiData);
+		return apiData;
+	}
 }
+
