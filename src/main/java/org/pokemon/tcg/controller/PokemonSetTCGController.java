@@ -6,7 +6,6 @@ import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.pokemon.tcg.adapter.PokemonAdapter;
 import org.pokemon.tcg.model.SetsApi;
 import org.pokemon.tcg.model.TCGReponseDataList;
-import org.pokemon.tcg.model.TCGResponseApiData;
 import org.pokemon.tcg.service.impl.PokemonSetTCGService;
 
 import jakarta.inject.Inject;

@@ -20,6 +20,8 @@ public class TCGResponseApiData implements Serializable {
 	
 	private List<SetsApi> sets = new ArrayList<>();
 	
+	private TCGResponseApiDetail detail;
+	
 	public List<TCGResponseApi> getData() {
 		return data;
 	}
@@ -54,6 +56,16 @@ public class TCGResponseApiData implements Serializable {
 
 	public void setSets(List<SetsApi> sets) {
 		this.sets = sets;
+	}
+
+
+	public TCGResponseApiDetail getDetail() {
+		return detail;
+	}
+
+
+	public void setDetail(TCGResponseApiDetail detail) {
+		this.detail = detail;
 	}
 
 	

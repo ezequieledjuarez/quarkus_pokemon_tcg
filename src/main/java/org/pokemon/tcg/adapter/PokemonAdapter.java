@@ -4,11 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import org.pokemon.tcg.model.Prices;
+import org.pokemon.tcg.model.Set;
 import org.pokemon.tcg.model.SetsApi;
 import org.pokemon.tcg.model.TCG;
+import org.pokemon.tcg.model.TCGReponseData;
 import org.pokemon.tcg.model.TCGReponseDataList;
 import org.pokemon.tcg.model.TCGResponseApi;
 import org.pokemon.tcg.model.TCGResponseApiData;
+import org.pokemon.tcg.model.TCGResponseApiDetail;
 import org.pokemon.tcg.model.Type;
 import org.pokemon.tcg.model.TypesData;
 
@@ -20,7 +24,7 @@ public class PokemonAdapter {
 
 		for (TCG pokemonService : pokemonList) {
 			TCGResponseApi responseApiPokemon = new TCGResponseApi(pokemonService.getName(),
-					pokemonService.getImages().getLarge(), pokemonService.getNumber(), pokemonService.getFlavorText());
+					pokemonService.getImages().getLarge(), pokemonService.getNumber(), pokemonService.getFlavorText(), pokemonService.getId());
 
 			listApiPokemon.add(responseApiPokemon);
 		}
@@ -43,7 +47,8 @@ public class PokemonAdapter {
 				TCGResponseApi responseApiPokemon = new TCGResponseApi(pokemonServiceList.get(randomPokemon).getName(),
 						pokemonServiceList.get(randomPokemon).getImages().getLarge(),
 						pokemonServiceList.get(randomPokemon).getNationalPokedexNumbers().get(0).toString(),
-						pokemonServiceList.get(randomPokemon).getFlavorText());
+						pokemonServiceList.get(randomPokemon).getFlavorText(),
+						pokemonServiceList.get(randomPokemon).getId());
 			
 					listApiPokemon.add(responseApiPokemon);
 			}
@@ -100,6 +105,32 @@ public class PokemonAdapter {
 		
 		apiData.setSets(setsApiData);
 		return apiData;
+	}
+
+	public static TCGResponseApiDetail responsePokemonDetail(TCGReponseData pokemonService) {
+		 TCG pokemonDataService = pokemonService.getData();
+		 
+		 Set set = pokemonDataService.getSet();
+				
+		 Prices cardMarketPrices = pokemonDataService.getCardmarket().getPrices();
+		
+		 TCGResponseApiDetail responseApiDetail = new 
+				 TCGResponseApiDetail(
+						 set.getName(), set.getSeries(), 
+						 set.getReleaseDate(), 
+						 set.getImages().getSymbol(), set.getImages().getLogo(),
+						 pokemonDataService.getRarity(), 
+						 pokemonDataService.getNationalPokedexNumbers().get(0),
+						 pokemonDataService.getName(), 
+						 cardMarketPrices.getAverageSellPrice(),
+						 cardMarketPrices.getLowPrice(),
+						 cardMarketPrices.getTrendPrice(),
+						 pokemonDataService.getImages().getLarge()
+						 );
+		
+		
+
+		return responseApiDetail;
 	}
 }
 
